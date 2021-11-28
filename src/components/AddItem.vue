@@ -1,36 +1,36 @@
 <template>
   <div class="form">
-    <form action="">
+    <form @submit="submitForm">
       <div class="form-group">
         <div class="form-group__header">
           <span class="form-group__header-text necessarily">Наименование товара</span>
         </div>
         <div class="form-group__body">
-          <input class="form-group__body-input" type="text" placeholder="Введите наименование товара">
+          <input v-model="form.name.value" class="form-group__body-input" type="text" placeholder="Введите наименование товара">
         </div>
       </div>
       <div class="form-group">
         <div class="form-group__header">
-          <span class="form-group__header-text">Наименование товара</span>
+          <span class="form-group__header-text">Описание товара</span>
         </div>
         <div class="form-group__body">
-          <textarea class="form-group__body-textarea" placeholder="Введите наименование товара"/>
+          <textarea v-model="form.description.value" class="form-group__body-textarea" placeholder="Описание товара"/>
         </div>
       </div>
       <div class="form-group">
         <div class="form-group__header">
-          <span class="form-group__header-text necessarily">Наименование товара</span>
+          <span class="form-group__header-text necessarily">Ссылка на изображение товара</span>
         </div>
         <div class="form-group__body">
-          <input class="form-group__body-input" type="text" placeholder="Введите наименование товара">
+          <input v-model="form.image.value" class="form-group__body-input" type="text" placeholder="Введите ссылку">
         </div>
       </div>
       <div class="form-group">
         <div class="form-group__header">
-          <span class="form-group__header-text necessarily">Наименование товара</span>
+          <span class="form-group__header-text necessarily">Цена товара</span>
         </div>
         <div class="form-group__body">
-          <input class="form-group__body-input" type="text" placeholder="Введите наименование товара">
+          <input v-model.number="form.price.value" class="form-group__body-input" type="number" placeholder="Введите цену">
         </div>
       </div>
       <div class="form-group">
@@ -44,7 +44,46 @@
 
 <script>
 export default {
-  name: 'AddItem'
+  name: 'AddItem',
+  data () {
+    return {
+      form: {
+        name: {
+          value: null
+        },
+        description: {
+          value: ''
+        },
+        image: {
+          value: null
+        },
+        price: {
+          value: null
+        }
+      }
+    }
+  },
+  methods: {
+    submitForm () {
+      // const { name, description, image, price } = this.form
+      // const validateName = this.validateName(name)
+      // const validateDescription = this.validateDescription(description)
+      // const validateImage = this.validateImage(image)
+      // const validatePrice = this.validatePrice(price)
+    },
+    validateName (name) {
+
+    },
+    validateDescription (description) {
+
+    },
+    validateImage (image) {
+
+    },
+    validatePrice (price) {
+
+    }
+  }
 }
 </script>
 
@@ -102,6 +141,17 @@ export default {
       border-radius: 10px;
       border: none;
       padding: 10px 65px;
+      color: #B4B4B4;
+
+      @media (max-width: 768px) {
+        padding: 10px 44px;
+      }
+
+      &:hover {
+        background: #7BAE73;
+        transition: 0.4s;
+        color: white
+      }
 
       &-text {
         font-family: Inter;
@@ -110,8 +160,6 @@ export default {
         font-size: 12px;
         line-height: 15px;
         text-align: center;
-        letter-spacing: -0.02em;
-        color: #B4B4B4;
       }
     }
   }
