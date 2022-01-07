@@ -35,15 +35,15 @@ export default {
 <style scoped lang="scss">
   .items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 255px);
+    grid-template-columns: repeat(auto-fill, calc((100% - 60px) / 4));
     grid-gap: 20px;
 
     @media (max-width: 1024px) {
-      grid-template-columns: repeat(auto-fill, 304px)
+      grid-template-columns: repeat(auto-fill, calc((100% - 40px) / 3))
     }
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(auto-fill, 236px)
+      grid-template-columns: repeat(auto-fill, calc((100% - 20px) / 2))
     }
 
     @media (max-width: 425px) {
@@ -68,7 +68,24 @@ export default {
     }
 
     &__about {
-    padding: 16px;
+      padding: 16px;
+      display: grid;
+      grid-gap: 8px;
+
+      &-title {
+        h1 {
+          font-size: 1em;
+        }
+      }
+
+      &-desctiption {
+        overflow: hidden;
+        height: 80px;
+
+        p {
+          font-size: 0.8em;
+        }
+      }
     }
   }
 </style>

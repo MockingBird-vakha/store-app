@@ -95,8 +95,22 @@ body {
   }
 
   @media (max-width: 425px) {
-    grid-template-areas: 'asd';
-    grid-auto-columns: auto;
+    display: block;
+  }
+
+  &__block {
+
+    &-left {
+      grid-area: add;
+
+      @media (max-width: 425px) {
+        margin-bottom: 20px;
+      }
+    }
+
+    &-right {
+      grid-area: item;
+    }
   }
 }
 </style>
