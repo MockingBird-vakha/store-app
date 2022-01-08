@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-    <form @submit="submitForm">
+    <form @submit.prevent="submitForm()">
       <div class="form-group">
         <div class="form-group__header">
           <span class="form-group__header-text necessarily">Наименование товара</span>
@@ -43,6 +43,9 @@
 </template>
 
 <script>
+
+import { mapActions } from 'vuex'
+
 export default {
   name: 'AddItem',
   data () {
@@ -64,12 +67,27 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['addItem']),
     submitForm () {
-      // const { name, description, image, price } = this.form
-      // const validateName = this.validateName(name)
-      // const validateDescription = this.validateDescription(description)
-      // const validateImage = this.validateImage(image)
-      // const validatePrice = this.validatePrice(price)
+      const form = JSON.parse(JSON.stringify(this.form))
+      this.addItem(form)
+      this.resetForm()
+    },
+    resetForm () {
+      this.form = {
+        name: {
+          value: null
+        },
+        description: {
+          value: ''
+        },
+        image: {
+          value: null
+        },
+        price: {
+          value: null
+        }
+      }
     },
     validateName (name) {
 

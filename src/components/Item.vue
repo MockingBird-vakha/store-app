@@ -1,20 +1,18 @@
 <template>
   <div class="items">
-    <div class="card" v-for="i in a" :key="i">
+    <div class="card" v-for="(el, index) in items" :key="el.name.value + index">
       <div class="card__img">
-        <img src="../assets/foto.png" width="255" height="150" alt="asd">
+        <img :src="el.image.value" width="255" height="150" alt="asd">
       </div>
       <div class="card__about">
         <div class="card__about-title">
-          <h1>Наименование товара</h1>
+          <h1>{{ el.name.value }}</h1>
         </div>
         <div class="card__about-desctiption">
-          <p>Довольно-таки интересное описание товара в несколько строк.
-            Довольно-таки интересное описание товара в несколько строк
-          </p>
+          <p>{{ el.description.value }}</p>
         </div>
         <div class="card__about-price">
-          <span>10 000 руб.</span>
+          <span>{{ el.price.value }} руб.</span>
         </div>
       </div>
     </div>
@@ -22,12 +20,18 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+
 export default {
   name: 'Item',
   data () {
     return {
       a: 9
     }
+  },
+  computed: {
+    ...mapState(['items'])
   }
 }
 </script>
@@ -58,6 +62,8 @@ export default {
     width: 100%;
 
     &__img {
+      min-height: 150px;
+
       img {
         width: 100%;
 
