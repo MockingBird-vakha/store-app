@@ -1,18 +1,18 @@
 <template>
   <div class="items">
-    <div class="card" v-for="(el, index) in items" :key="el.name.value + index">
+    <div class="card" v-for="(el, index) in items" :key="el.name + index">
       <div class="card__img">
-        <img :src="el.image.value" width="255" height="150" alt="asd">
+        <img :src="el.image" width="255" height="150" alt="asd">
       </div>
       <div class="card__about">
         <div class="card__about-title">
-          <h1>{{ el.name.value }}</h1>
+          <h1>{{ el.name }}</h1>
         </div>
         <div class="card__about-desctiption">
-          <p>{{ el.description.value }}</p>
+          <p>{{ el.description }}</p>
         </div>
         <div class="card__about-price">
-          <span>{{ el.price.value }} руб.</span>
+          <span>{{ el.price }} руб.</span>
         </div>
       </div>
     </div>

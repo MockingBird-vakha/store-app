@@ -6,7 +6,8 @@
           <span class="form-group__header-text necessarily">Наименование товара</span>
         </div>
         <div class="form-group__body">
-          <input v-model="form.name.value" class="form-group__body-input" type="text" placeholder="Введите наименование товара">
+          <input v-model="form.name" @blur="$v.form.name.$touch()" class="form-group__body-input" type="text" placeholder="Введите наименование товара">
+          <span v-if="$v.form.name.$error" class="form-group__body-error">Это поле является обязательным</span>
         </div>
       </div>
       <div class="form-group">
@@ -14,7 +15,7 @@
           <span class="form-group__header-text">Описание товара</span>
         </div>
         <div class="form-group__body">
-          <textarea v-model="form.description.value" class="form-group__body-textarea" placeholder="Описание товара"/>
+          <textarea v-model="form.description" class="form-group__body-textarea" placeholder="Описание товара"/>
         </div>
       </div>
       <div class="form-group">
@@ -22,7 +23,8 @@
           <span class="form-group__header-text necessarily">Ссылка на изображение товара</span>
         </div>
         <div class="form-group__body">
-          <input v-model="form.image.value" class="form-group__body-input" type="text" placeholder="Введите ссылку">
+          <input v-model="form.image" @blur="$v.form.image.$touch()" class="form-group__body-input" type="text" placeholder="Введите ссылку">
+          <span v-if="$v.form.image.$error" class="form-group__body-error">Это поле является обязательным</span>
         </div>
       </div>
       <div class="form-group">
@@ -30,11 +32,12 @@
           <span class="form-group__header-text necessarily">Цена товара</span>
         </div>
         <div class="form-group__body">
-          <input v-model.number="form.price.value" class="form-group__body-input" type="number" placeholder="Введите цену">
+          <input v-model.number="form.price" @blur="$v.form.price.$touch()" class="form-group__body-input" type="number" placeholder="Введите цену">
+          <span v-if="$v.form.price.$error" class="form-group__body-error">Это поле является обязательным</span>
         </div>
       </div>
       <div class="form-group">
-        <button class="form-group__submit">
+        <button type="submit" class="form-group__submit" :disabled="$v.$invalid">
           <span class="form-group__submit-text">Добавить товар</span>
         </button>
       </div>
@@ -45,61 +48,47 @@
 <script>
 
 import { mapActions } from 'vuex'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'AddItem',
   data () {
     return {
       form: {
-        name: {
-          value: null
-        },
-        description: {
-          value: ''
-        },
-        image: {
-          value: null
-        },
-        price: {
-          value: null
-        }
+        name: null,
+        description: '',
+        image: null,
+        price: null
       }
     }
   },
   methods: {
     ...mapActions(['addItem']),
     submitForm () {
-      const form = JSON.parse(JSON.stringify(this.form))
-      this.addItem(form)
+      this.addItem(Object.freeze(this.form))
       this.resetForm()
+      this.$v.$reset()
     },
     resetForm () {
       this.form = {
-        name: {
-          value: null
-        },
-        description: {
-          value: ''
-        },
-        image: {
-          value: null
-        },
-        price: {
-          value: null
-        }
+        name: null,
+        description: '',
+        image: null,
+        price: null
       }
-    },
-    validateName (name) {
-
-    },
-    validateDescription (description) {
-
-    },
-    validateImage (image) {
-
-    },
-    validatePrice (price) {
-
+    }
+  },
+  validations: {
+    form: {
+      name: {
+        required
+      },
+      image: {
+        required
+      },
+      price: {
+        required
+      }
     }
   }
 }
@@ -125,13 +114,18 @@ export default {
 
       &-text {
         font-size: 10px;
-        line-height: 13px;
         letter-spacing: -0.02em;
         color: #49485E;
       }
     }
 
     &__body {
+
+      &-error {
+        font-size: 10px;
+        letter-spacing: -0.02em;
+        color: red;
+      }
 
       &-input {
         background: #FFFEFB;
@@ -155,20 +149,20 @@ export default {
 
     &__submit {
       width: 100%;
-      background: #EEEEEE;
+      background: #7BAE73;
       border-radius: 10px;
       border: none;
       padding: 10px 65px;
-      color: #B4B4B4;
+      color: white;
+      transition: 0.5s;
 
       @media (max-width: 768px) {
         padding: 10px 44px;
       }
 
-      &:hover {
-        background: #7BAE73;
-        transition: 0.4s;
-        color: white
+      &:disabled {
+        background: #EEEEEE;
+        color: #B4B4B4;
       }
 
       &-text {
