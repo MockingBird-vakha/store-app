@@ -6,7 +6,11 @@
           <h1 class="header-title">Добавление товара</h1>
         </div>
         <div class="header-right">
-          <button class="header-filter">По умолчанию</button>
+          <select class="header-filter" v-model="filter">
+            <option value="defaultStateItems">По умолчанию</option>
+            <option value="hightPriceShortStateItems">По возрастанию</option>
+            <option value="lowPriceShortStateItems">По убыванию</option>
+          </select>
         </div>
       </header>
       <section class="main">
@@ -14,7 +18,7 @@
           <AddItem/>
         </div>
         <div class="main__block-right">
-          <Item/>
+          <Item :filtered='filter'/>
         </div>
       </section>
     </div>
@@ -30,6 +34,11 @@ export default {
   components: {
     AddItem,
     Item
+  },
+  data () {
+    return {
+      filter: 'defaultStateItems'
+    }
   }
 }
 </script>
@@ -38,6 +47,7 @@ export default {
 * {
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {

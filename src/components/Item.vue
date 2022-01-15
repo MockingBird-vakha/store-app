@@ -1,6 +1,6 @@
 <template>
   <div class="items">
-    <div class="card" v-for="(el, index) in items" :key="el.name + index">
+    <div class="card" v-for="(el, index) in filteredItems" :key="el.name + index">
       <div class="card__img">
         <img :src="el.image" width="255" height="150" alt="asd">
       </div>
@@ -21,17 +21,25 @@
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'Item',
-  data () {
-    return {
-      a: 9
-    }
-  },
+  props: ['filtered'],
   computed: {
-    ...mapState(['items'])
+    ...mapState(['items']),
+    ...mapGetters([
+      'lowPriceShortStateItems',
+      'hightPriceShortStateItems'
+    ]),
+    filteredItems: function () {
+      switch (this.filtered) {
+        case 'defaultStateItems': return this.items
+        case 'lowPriceShortStateItems': return this.lowPriceShortStateItems
+        case 'hightPriceShortStateItems': return this.hightPriceShortStateItems
+        default: return this.items
+      }
+    }
   }
 }
 </script>
